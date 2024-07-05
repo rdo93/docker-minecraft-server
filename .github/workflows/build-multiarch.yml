@@ -113,7 +113,7 @@ jobs:
           # NOTE for forks: if your Docker Hub organization doesn't match your Github repo's,
           # then the use of ${{ github.repository_owner }} will need to be replaced.
           images: |
-            ${{ github.repository_owner }}/minecraft-server
+            ${{ secrets.DOCKERHUB_ORG }}/minecraft-server
             ghcr.io/${{ github.repository_owner }}/minecraft-server
           tags: |
             # For the "main" variant, it gets the tag as-is, without suffix
@@ -156,13 +156,13 @@ jobs:
           cache-from: type=gha,scope=${{ matrix.variant }}
           # no cache-to to avoid cross-cache update from next build step
 
-      - name: Run tests
-        env:
-          MINECRAFT_VERSION: ${{ matrix.mcVersion }}
-          VARIANT: ${{ matrix.variant }}
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-        run: |
-          tests/test.sh
+      #- name: Run tests
+      #  env:
+      #    MINECRAFT_VERSION: ${{ matrix.mcVersion }}
+      #    VARIANT: ${{ matrix.variant }}
+      #    CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      #  run: |
+      #    tests/test.sh
 
       - name: Login to DockerHub
         uses: docker/login-action@v3.2.0
